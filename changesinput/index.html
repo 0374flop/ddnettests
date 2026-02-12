@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DDNet</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: #1c1927; /* серый фон */
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: #1c1927;
+        }
+    </style>
+</head>
+<body>
+<canvas id="game-canvas"></canvas>
+<script>
+const canvas = document.getElementById('game-canvas');
+const ctx = canvas.getContext('2d');
+
+function sendinput(input) {
+    fetch('/input', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input)
+    });
+}
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+let lastInput = null;
+let input = {
+    m_Direction: 0,
+    m_TargetX: 0,
+    m_TargetY: 0,
+    m_Jump: 0,
+    m_Fire: 0,
+    m_Hook: 0,
+    m_PlayerFlags: 0,
+    m_WantedWeapon: 0,
+    m_NextWeapon: 0,
+    m_PrevWeapon: 0
+};
+
+function isInputChanged(a, b) {
+    if (!a) return true;
+    for (const key in a) {
+        if (a[key] !== b[key]) return true;
+    }
+    return false;
+}
+
+const keyBindings = {
+    ArrowLeft: 'left',
+    ArrowRight: 'right',
+    ArrowUp: 'up',
+    ArrowDown: 'down',
+    ' ': 'jump',
+    h: 'hook',
+    f: 'fire',
+    k: 'kill',
+    a: 'left',
+    d: 'right'
+};
+
+
+let pressed = {};
+
+document.addEventListener('keydown', (e) => {
+    if (!pressed[e.key] && keyBindings[e.key]) {
+        pressed[e.key] = true;
+        updateInputFromKeys();
+    }
+});
+
+document.addEventListener('keyup', (e) => {
+    if (pressed[e.key]) {
+        pressed[e.key] = false;
+        updateInputFromKeys();
+    }
+});
+
+function updateInputFromKeys() {
+    input.m_Direction = 0;
+
+    if (pressed['ArrowLeft'] || pressed['a']) input.m_Direction -= 1;
+    if (pressed['ArrowRight'] || pressed['d']) input.m_Direction += 1;
+
+    input.m_Jump = pressed[' '] || pressed['w'] ? 1 : 0;
+    input.m_Hook = pressed['h'] || input.m_Hook;
+    input.m_Fire = pressed['f'] || input.m_Fire;
+}
+
+// Pointer Lock
+canvas.addEventListener('click', () => canvas.requestPointerLock());
+
+let mouseX = canvas.width / 2;
+let mouseY = canvas.height / 2;
+
+document.addEventListener('pointerlockchange', () => {
+    if (document.pointerLockElement === canvas) console.log('Мышь зафиксирована');
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (document.pointerLockElement === canvas) {
+        mouseX += e.movementX;
+        mouseY += e.movementY;
+
+        // центр
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+
+        // вычисляем dx/dy от центра
+        let dx = mouseX - cx;
+        let dy = mouseY - cy;
+
+        // ограничиваем радиус
+        const radius = 100;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist > radius) {
+            dx = (dx / dist) * radius;
+            dy = (dy / dist) * radius;
+            mouseX = cx + dx;
+            mouseY = cy + dy;
+        }
+
+        // передаем в инпут
+        input.m_TargetX = dx;
+        input.m_TargetY = dy;
+    } else {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.pointerLockElement === canvas) {
+        document.exitPointerLock();
+    }
+});
+
+// ЛКМ = Fire, ПКМ = Hook
+canvas.addEventListener('mousedown', (e) => {
+    if (e.button === 0) input.m_Fire = 1;  // левая кнопка
+    if (e.button === 2) input.m_Hook = 1;  // правая кнопка
+});
+
+canvas.addEventListener('mouseup', (e) => {
+    if (e.button === 0) input.m_Fire = 0;
+    if (e.button === 2) input.m_Hook = 0;
+});
+
+// Чтобы правая кнопка не открывала контекстное меню
+canvas.addEventListener('contextmenu', e => e.preventDefault());
+
+// Точки
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Центр
+    ctx.beginPath();
+    ctx.arc(canvas.width / 2, canvas.height / 2, 15, 0, Math.PI*2);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+
+    // Мышь
+    ctx.beginPath();
+    ctx.arc(mouseX, mouseY, 8, 0, Math.PI*2);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+}
+
+function update() {
+    draw();
+    if (isInputChanged(lastInput, input)) {
+        sendinput(input);
+        lastInput = { ...input };
+    }
+    requestAnimationFrame(update);
+}
+
+update();
+</script>
+</body>
+</html>
