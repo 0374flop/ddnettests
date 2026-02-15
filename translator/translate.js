@@ -127,6 +127,7 @@ if (require.main === module) {
       await ensureServer();
       console.log("RU → EN:", await translateText("Привет, как дела?"));
       console.log("EN → RU:", await translateText("Hello world!", "en", "ru"));
+      await gracefulShutdown();
     } catch (err) {
       console.error("Ошибка:", err.message);
     }

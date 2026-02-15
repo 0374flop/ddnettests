@@ -1,4 +1,4 @@
-const { main, getBotname } = require('./echo-bot.js');
+const { main, getBotname } = require('./translator-bot.js');
 const ddmaster = require('ddmaster');
 const { bot } = require('ddbot.js-0374');
 

@@ -39,6 +39,7 @@ async function main(addrr, nameBot = 'Meow') {
         let timemsg = 0; // время
 
         setTimeout(() => {
+            console.log(`${botName} connected to ${addrr}`);
             botClient.game.Say('Ку всем');
         }, 1251);
 
@@ -87,12 +88,13 @@ function getBotname() {
 }
 
 const emitter = require('events');
+const ddmaster = require('ddmaster');
 if (require.main === module) {
     const time1 = 1000;
     (async () => {
         await ensureServer();
-        const servers = await getActiveeuServers();
-        emitter.setMaxListeners(servers.length * 6);
+        const servers = await getActiveeuServers(await ddmaster.getrawDDNetServers());
+        emitter.setMaxListeners(servers.length * 10);
         logDebuger.logDebug(`Found ${servers.length} active ddnet linear servers.`);
         servers.forEach(addrr => {
             logDebuger.logDebug(`Starting bot on server ${addrr}`);
