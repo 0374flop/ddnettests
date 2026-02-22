@@ -43,5 +43,4 @@ const tunnel = new ngrok(8080, undefined, undefined, server);
 
 tunnel.on('ready', ({ http, ws }) => {
     console.log(`\nСигналинг доступен на: ${ws}`);
-    console.log(`Вставь в SIGNALING_URL: "${ws}"`);
 });
