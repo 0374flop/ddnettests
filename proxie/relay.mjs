@@ -1,101 +1,106 @@
 import dgram from 'dgram';
-import WebSocket from 'ws';
-import { createRequire } from 'module';
+import { WebSocket } from 'ws';
 
-const require = createRequire(import.meta.url);
-const SimplePeer = require('simple-peer');
+const SERVER_URL = process.env.SERVER_URL || 'wss://kit-touched-commonly.ngrok-free.app';
+const RELAY_ID   = process.env.RELAY_ID   || `relay-${Math.random().toString(36).slice(2, 7)}`;
 
-// Костыль для simple-peer в Node.js
-const wrtc = require('@roamhq/wrtc');
+// sessionId → { host, port } — куда слать UDP ответы
+const sessions = new Map();
 
-const SIGNALING_URL = 'wss://kit-touched-commonly.ngrok-free.app';
-const RELAY_ID = 'relay-1';
-
-// UDP сокет для общения с DDNet сервером
 const udpSocket = dgram.createSocket('udp4');
 udpSocket.bind();
 
-let ddnetHost = null;
-let ddnetPort = null;
-let peer = null;
+let ws = null;
+let reconnectTimer = null;
 
-// Подключаемся к сигналингу
-const ws = new WebSocket(SIGNALING_URL);
+function connect() {
+    console.log(`[*] подключаемся к ${SERVER_URL} как "${RELAY_ID}"...`);
+    ws = new WebSocket(SERVER_URL);
 
-ws.on('open', () => {
-    console.log('[signaling] подключился');
-    ws.send(JSON.stringify({ type: 'register', id: RELAY_ID }));
-});
+    ws.on('open', () => {
+        console.log('[+] подключились');
+        ws.send(JSON.stringify({ type: 'relay:register', id: RELAY_ID }));
+    });
 
-ws.on('message', (data) => {
-    const msg = JSON.parse(data);
+    ws.on('message', (raw) => {
+        let msg;
+        try { msg = JSON.parse(raw); } catch { return; }
 
-    if (msg.type === 'registered') {
-        console.log(`[signaling] зарегистрирован как "${RELAY_ID}"`);
-        console.log('[*] ждём бота...');
-    }
-
-    // Получили сигнал от бота — создаём peer
-    if (msg.type === 'signal') {
-        if (!peer) {
-            peer = new SimplePeer({ 
-                initiator: false, 
-                wrtc,
-                config: {
-                    iceServers: [
-                        { urls: 'stun:stun.l.google.com:19302' },
-                        { urls: 'stun:stun1.l.google.com:19302' }
-                    ]
-                }
-            });
-
-            peer.on('signal', (signalData) => {
-                // Отвечаем боту нашим сигналом
-                ws.send(JSON.stringify({
-                    type: 'signal',
-                    to: msg.from,
-                    data: signalData
-                }));
-            });
-
-            peer.on('connect', () => {
-                console.log('[webrtc] бот подключился!');
-            });
-
-            // Получили пакет от бота → шлём на DDNet
-            peer.on('data', (buf) => {
-                const targetPort = buf.readUInt16BE(0);
-                const ip = `${buf[2]}.${buf[3]}.${buf[4]}.${buf[5]}`;
-                const payload = buf.slice(6);
-
-                // Запоминаем куда слать ответы
-                ddnetHost = ip;
-                ddnetPort = targetPort;
-
-                udpSocket.send(payload, targetPort, ip);
-            });
-
-            peer.on('error', (err) => console.error('[webrtc] ошибка:', err));
-            peer.on('close', () => {
-                console.log('[webrtc] бот отключился');
-                peer = null;
-                ddnetHost = null;
-                ddnetPort = null;
-            });
+        if (msg.type === 'relay:registered') {
+            console.log(`[*] зарегистрирован как "${RELAY_ID}", ждём ботов...`);
         }
 
-        peer.signal(msg.data);
+        if (msg.type === 'relay:session_start') {
+            console.log(`[bot+] сессия ${msg.sessionId}`);
+            // host/port узнаем из первого пакета
+            sessions.set(msg.sessionId, { host: null, port: null });
+        }
+
+        if (msg.type === 'relay:session_end') {
+            console.log(`[bot-] сессия ${msg.sessionId}`);
+            sessions.delete(msg.sessionId);
+        }
+
+        // пакет от бота — шлём UDP на DDNet
+        if (msg.type === 'relay:packet') {
+            const buf = Buffer.from(msg.data, 'base64');
+
+            const targetPort = buf.readUInt16BE(0);
+            const ip         = `${buf[2]}.${buf[3]}.${buf[4]}.${buf[5]}`;
+            const payload    = buf.slice(6);
+
+            // запоминаем куда слать ответы для этой сессии
+            const session = sessions.get(msg.sessionId);
+            if (session) {
+                session.host = ip;
+                session.port = targetPort;
+            }
+
+            udpSocket.send(payload, targetPort, ip, (err) => {
+                if (err) console.error(`[udp] ошибка отправки:`, err.message);
+            });
+        }
+    });
+
+    ws.on('close', () => {
+        console.log('[-] отключились, реконнект через 3с...');
+        sessions.clear();
+        scheduleReconnect();
+    });
+
+    ws.on('error', (err) => {
+        console.error('[ws error]', err.message);
+    });
+}
+
+function scheduleReconnect() {
+    if (reconnectTimer) return;
+    reconnectTimer = setTimeout(() => {
+        reconnectTimer = null;
+        connect();
+    }, 3000);
+}
+
+// UDP ответы от DDNet — пересылаем боту через сервер
+// Нужно понять какой сессии принадлежит ответ.
+// DDNet шлёт с того же ip:port куда мы слали — ищем сессию по host:port
+udpSocket.on('message', (data, rinfo) => {
+    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+
+    // ищем сессию по адресу сервера
+    for (const [sessionId, s] of sessions) {
+        if (s.host === rinfo.address && s.port === rinfo.port) {
+            ws.send(JSON.stringify({
+                type: 'relay:response',
+                sessionId,
+                data: data.toString('base64')
+            }));
+            return;
+        }
     }
+    // если не нашли — игнорируем (мусор или старый пакет)
 });
 
-// Ответы от DDNet → шлём боту обратно
-udpSocket.on('message', (msg) => {
-    if (peer && peer.connected) {
-        peer.send(msg);
-    }
-});
+udpSocket.on('error', (err) => console.error('[udp error]', err.message));
 
-ws.on('close', () => console.log('[signaling] отключился'));
-ws.on('error', (err) => console.error('[signaling] ошибка:', err));
-
-console.log('Relay запущен, подключаемся к сигналингу...');
+connect();
