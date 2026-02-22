@@ -11,9 +11,19 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@ngrok/ngrok": "^1.7.0",
+    "@roamhq/wrtc": "^0.9.1",
     "ddbot.js-0374": "^3.2.1",
     "ddmaster": "^2.3.0",
     "franc": "^6.2.0",
-    "loger0374": "^0.4.1"
+    "loger0374": "^0.4.1",
+    "module": "^2.0.0",
+    "simple-peer": "^9.11.1",
+    "ws": "^8.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.0",
+    "@types/simple-peer": "^9.11.9",
+    "@types/ws": "^8.18.1"
   }
 }
