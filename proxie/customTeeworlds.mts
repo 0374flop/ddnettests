@@ -13,15 +13,9 @@ const CustomTeeworlds: typeof Teeworlds = {
         }
 
         async connect() {
-            // Ждём подключения к relay
             const patchSend = await this._setupProxy();
-
-            // Патчим send ДО super.connect() — сокет уже существует (создан в конструкторе)
-            // super.connect() не пересоздаёт сокет если он уже есть
             const socket: any = (this as any).socket;
             socket.send = patchSend;
-
-            // super.connect() вешает socket.on('message') на этот же сокет
             await super.connect();
         }
 
@@ -55,7 +49,6 @@ const CustomTeeworlds: typeof Teeworlds = {
                         connected = true;
                         clearTimeout(timeout);
 
-                        // Возвращаем функцию-патч для socket.send
                         const patchSend = (
                             buf: Buffer,
                             offset: number,
@@ -80,7 +73,6 @@ const CustomTeeworlds: typeof Teeworlds = {
                         return;
                     }
 
-                    // Ответы от DDNet — эмитим на сокет
                     if (msg.type === 'bot:response') {
                         const buf = Buffer.from(msg.data, 'base64');
                         const socket: any = (this as any).socket;
@@ -100,7 +92,7 @@ const CustomTeeworlds: typeof Teeworlds = {
 
         async Disconnect() {
             await super.Disconnect();
-            // Сначала шлём явный disconnect чтобы сервер освободил relay синхронно
+            // шлём явный disconnect чтобы сервер освободил relay синхронно
             if (this._ws?.readyState === WebSocket.OPEN) {
                 await new Promise<void>(resolve => {
                     this._ws!.once('close', resolve);

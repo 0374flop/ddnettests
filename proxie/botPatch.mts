@@ -3,14 +3,6 @@ import { Client } from 'teeworlds';
 
 const SERVER_URL = 'wss://kit-touched-commonly.ngrok-free.app';
 
-/**
- * Создаёт teeworlds Client, пакеты которого идут через relay.
- * @param ip         - адрес DDNet сервера
- * @param port       - порт DDNet сервера
- * @param nickname   - ник бота
- * @param options    - опции teeworlds Client
- * @param relayId    - конкретный relay (опционально, иначе сервер выберет сам)
- */
 export function createProxiedClient(
     ip: string,
     port: number,
@@ -37,10 +29,7 @@ export function createProxiedClient(
         }, 10000);
 
         ws.on('open', () => {
-            ws.send(JSON.stringify({
-                type: 'bot:connect',
-                relayId: relayId ?? null
-            }));
+            ws.send(JSON.stringify({ type: 'bot:connect', relayId: relayId ?? null }));
         });
 
         ws.on('message', (raw) => {
@@ -61,7 +50,6 @@ export function createProxiedClient(
                 connected = true;
                 clearTimeout(timeout);
 
-                // патчим socket.send — перехватываем UDP пакеты и шлём через WS
                 socket.send = (
                     buf: Buffer,
                     offset: number,
@@ -75,16 +63,10 @@ export function createProxiedClient(
                     header.writeUInt16BE(targetPort, 0);
                     header[2] = parts[0]; header[3] = parts[1];
                     header[4] = parts[2]; header[5] = parts[3];
-
                     const wrapped = Buffer.concat([header, buf.slice(offset, offset + length)]);
-
                     if (ws.readyState === WebSocket.OPEN) {
-                        ws.send(JSON.stringify({
-                            type: 'bot:packet',
-                            data: wrapped.toString('base64')
-                        }));
+                        ws.send(JSON.stringify({ type: 'bot:packet', data: wrapped.toString('base64') }));
                     }
-
                     if (callback) callback(null, wrapped.length);
                 };
 
@@ -92,7 +74,6 @@ export function createProxiedClient(
                 return;
             }
 
-            // ответ от DDNet через relay → эмулируем входящий UDP
             if (msg.type === 'bot:response') {
                 const buf = Buffer.from(msg.data, 'base64');
                 socket.emit('message', buf, {

@@ -1,28 +1,21 @@
 import { WebSocketServer, WebSocket } from 'ws';
 import http from 'http';
-import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const require = createRequire(import.meta.url);
 
-// --- ngrok ---
 const ngrokmodule = await import('@ngrok/ngrok');
-const ngroktokenpath = path.join(__dirname, 'ngrok.token');
-const ngrokdata = fs.readFileSync(ngroktokenpath, { encoding: 'utf-8' }).trim().split(' ');
+const ngrokdata = fs.readFileSync(path.join(__dirname, 'ngrok.token'), { encoding: 'utf-8' }).trim().split(' ');
 const NGROK_TOKEN  = ngrokdata[0];
 const NGROK_DOMAIN = ngrokdata[1];
 
-// --- HTTP + WS сервер ---
 const server = http.createServer();
 const wss = new WebSocketServer({ server });
 
-// relay: Map<relayId, { ws, busy: bool }>
-const relays = new Map();
-// bots: Map<sessionId, { ws, relayId }>
-const bots   = new Map();
+const relays = new Map(); // relayId → { ws, busy }
+const bots   = new Map(); // sessionId → { ws, relayId }
 
 let sessionCounter = 0;
 
@@ -37,7 +30,7 @@ function pickFreeRelay(preferredId) {
     return null;
 }
 
-// heartbeat: пингуем всех каждые 2с, если нет ответа — закрываем
+// heartbeat каждые 2с — обнаруживаем мёртвые соединения быстро
 setInterval(() => {
     wss.clients.forEach((client) => {
         if (client.isAlive === false) { client.terminate(); return; }
@@ -50,24 +43,21 @@ wss.on('connection', (ws) => {
     ws.isAlive = true;
     ws.on('pong', () => { ws.isAlive = true; });
 
-    let role = null;   // 'relay' | 'bot'
-    let myId  = null;  // relayId или sessionId
+    let role = null;
+    let myId  = null;
 
     ws.on('message', (raw) => {
         let msg;
         try { msg = JSON.parse(raw); } catch { return; }
 
-        // ---- РЕГИСТРАЦИЯ RELAY ----
         if (msg.type === 'relay:register') {
-            role  = 'relay';
-            myId  = msg.id || `relay-${Date.now()}`;
+            role = 'relay';
+            myId = msg.id || `relay-${Date.now()}`;
             relays.set(myId, { ws, busy: false });
-
             ws.send(JSON.stringify({ type: 'relay:registered', id: myId }));
             return;
         }
 
-        // ---- РЕГИСТРАЦИЯ БОТА ----
         if (msg.type === 'bot:connect') {
             const relayId = pickFreeRelay(msg.relayId);
             if (!relayId) {
@@ -76,12 +66,11 @@ wss.on('connection', (ws) => {
                 return;
             }
 
-            role  = 'bot';
-            myId  = `session-${++sessionCounter}`;
+            role = 'bot';
+            myId = `session-${++sessionCounter}`;
             relays.get(relayId).busy = true;
             bots.set(myId, { ws, relayId });
 
-            // автоосвобождение если бот умер без close события
             const releaseRelay = () => {
                 const s = bots.get(myId);
                 if (!s) return;
@@ -95,18 +84,11 @@ wss.on('connection', (ws) => {
             ws.once('close', releaseRelay);
             ws.once('error', releaseRelay);
 
-
             ws.send(JSON.stringify({ type: 'bot:connected', sessionId: myId, relayId }));
-
-            // сообщаем relay что к нему подключился бот
-            relays.get(relayId).ws.send(JSON.stringify({
-                type: 'relay:session_start',
-                sessionId: myId
-            }));
+            relays.get(relayId).ws.send(JSON.stringify({ type: 'relay:session_start', sessionId: myId }));
             return;
         }
 
-        // ---- ЯВНЫЙ ДИСКОННЕКТ БОТА ----
         if (msg.type === 'bot:disconnect') {
             const session = bots.get(myId);
             if (session) {
@@ -120,28 +102,19 @@ wss.on('connection', (ws) => {
             return;
         }
 
-        // ---- ПАКЕТ ОТ БОТА → relay ----
         if (msg.type === 'bot:packet') {
             const session = bots.get(myId);
             if (!session) return;
             const relay = relays.get(session.relayId);
             if (!relay) return;
-            relay.ws.send(JSON.stringify({
-                type: 'relay:packet',
-                sessionId: myId,
-                data: msg.data
-            }));
+            relay.ws.send(JSON.stringify({ type: 'relay:packet', sessionId: myId, data: msg.data }));
             return;
         }
 
-        // ---- ПАКЕТ ОТ RELAY → бот ----
         if (msg.type === 'relay:response') {
-            const session_ws = findBotWs(msg.sessionId);
+            const session_ws = bots.get(msg.sessionId)?.ws ?? null;
             if (!session_ws) return;
-            session_ws.send(JSON.stringify({
-                type: 'bot:response',
-                data: msg.data
-            }));
+            session_ws.send(JSON.stringify({ type: 'bot:response', data: msg.data }));
             return;
         }
     });
@@ -163,27 +136,17 @@ wss.on('connection', (ws) => {
                 const relay = relays.get(session.relayId);
                 if (relay) {
                     relay.busy = false;
-                    try {
-                        relay.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: myId }));
-                    } catch (e) {}
+                    try { relay.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: myId })); } catch {}
                 }
                 bots.delete(myId);
             }
         }
     });
-
-
 });
 
-function findBotWs(sessionId) {
-    return bots.get(sessionId)?.ws ?? null;
-}
-
-// --- запуск ---
 server.listen(0, async () => {
     const port = server.address().port;
     console.log(`[local] ws://localhost:${port}`);
-
 
     const listener = await ngrokmodule.connect({
         addr: port,
@@ -191,7 +154,6 @@ server.listen(0, async () => {
         domain: NGROK_DOMAIN
     });
 
-    const urlHttp = listener.url();
-    const urlWs   = urlHttp.replace('https://', 'wss://').replace('http://', 'ws://');
-    console.log(`\nДоступен по адресу: ${urlWs}\n`);
+    const urlWs = listener.url().replace('https://', 'wss://').replace('http://', 'ws://');
+    console.log(`[ngrok] ${urlWs}`);
 });
