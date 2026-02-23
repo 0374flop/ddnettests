@@ -49,11 +49,14 @@ function connect() {
             const ip         = `${buf[2]}.${buf[3]}.${buf[4]}.${buf[5]}`;
             const payload    = buf.slice(6);
 
-            // запоминаем куда слать ответы для этой сессии
+            console.log(`[>>] UDP → ${ip}:${targetPort} (${payload.length} байт)`);
+
             const session = sessions.get(msg.sessionId);
             if (session) {
                 session.host = ip;
                 session.port = targetPort;
+            } else {
+                console.log(`[!] relay:packet — сессия не найдена: ${msg.sessionId}`);
             }
 
             udpSocket.send(payload, targetPort, ip, (err) => {
@@ -85,9 +88,9 @@ function scheduleReconnect() {
 // Нужно понять какой сессии принадлежит ответ.
 // DDNet шлёт с того же ip:port куда мы слали — ищем сессию по host:port
 udpSocket.on('message', (data, rinfo) => {
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    console.log(`[<<] UDP от ${rinfo.address}:${rinfo.port} (${data.length} байт)`);
+    if (!ws || ws.readyState !== WebSocket.OPEN) { console.log('[!] WS не открыт'); return; }
 
-    // ищем сессию по адресу сервера
     for (const [sessionId, s] of sessions) {
         if (s.host === rinfo.address && s.port === rinfo.port) {
             ws.send(JSON.stringify({
@@ -98,7 +101,7 @@ udpSocket.on('message', (data, rinfo) => {
             return;
         }
     }
-    // если не нашли — игнорируем (мусор или старый пакет)
+    console.log(`[!] UDP ответ не нашёл сессию (${rinfo.address}:${rinfo.port})`);
 });
 
 udpSocket.on('error', (err) => console.error('[udp error]', err.message));

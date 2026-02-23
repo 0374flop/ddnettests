@@ -83,10 +83,10 @@ wss.on('connection', (ws) => {
         // ---- ПАКЕТ ОТ БОТА → relay ----
         if (msg.type === 'bot:packet') {
             const session = bots.get(myId);
-            if (!session) return;
+            if (!session) { console.log(`[!] bot:packet — сессия не найдена: ${myId}`); return; }
             const relay = relays.get(session.relayId);
-            if (!relay) return;
-            // пересылаем как есть (данные в base64)
+            if (!relay) { console.log(`[!] bot:packet — relay не найден: ${session.relayId}`); return; }
+            console.log(`[>>] ${myId} → ${session.relayId} (${msg.data?.length} символов base64)`);
             relay.ws.send(JSON.stringify({
                 type: 'relay:packet',
                 sessionId: myId,
@@ -97,9 +97,9 @@ wss.on('connection', (ws) => {
 
         // ---- ПАКЕТ ОТ RELAY → бот ----
         if (msg.type === 'relay:response') {
-            // relay шлёт ответ от DDNet обратно боту
             const session_ws = findBotWs(msg.sessionId);
-            if (!session_ws) return;
+            if (!session_ws) { console.log(`[!] relay:response — бот не найден: ${msg.sessionId}`); return; }
+            console.log(`[<<] ${msg.sessionId} ← relay (${msg.data?.length} символов base64)`);
             session_ws.send(JSON.stringify({
                 type: 'bot:response',
                 data: msg.data
@@ -112,7 +112,6 @@ wss.on('connection', (ws) => {
         if (role === 'relay') {
             console.log(`[relay-] ${myId}`);
             relays.delete(myId);
-            // дропаем ботов которые были на этом relay
             for (const [sid, s] of bots) {
                 if (s.relayId === myId) {
                     s.ws.send(JSON.stringify({ type: 'error', message: 'relay отключился' }));
@@ -127,7 +126,7 @@ wss.on('connection', (ws) => {
             if (session) {
                 const relay = relays.get(session.relayId);
                 if (relay) {
-                    relay.busy = false;
+                    relay.busy = false;  // <-- это уже есть
                     relay.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: myId }));
                 }
                 bots.delete(myId);
