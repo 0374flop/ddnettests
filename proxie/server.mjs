@@ -62,7 +62,7 @@ wss.on('connection', (ws) => {
             role  = 'relay';
             myId  = msg.id || `relay-${Date.now()}`;
             relays.set(myId, { ws, busy: false });
-            console.log(`[relay+] ${myId}`);
+
             ws.send(JSON.stringify({ type: 'relay:registered', id: myId }));
             return;
         }
@@ -81,7 +81,7 @@ wss.on('connection', (ws) => {
             relays.get(relayId).busy = true;
             bots.set(myId, { ws, relayId });
 
-            console.log(`[bot+] ${myId} → ${relayId}`);
+
             ws.send(JSON.stringify({ type: 'bot:connected', sessionId: myId, relayId }));
 
             // сообщаем relay что к нему подключился бот
@@ -95,10 +95,9 @@ wss.on('connection', (ws) => {
         // ---- ПАКЕТ ОТ БОТА → relay ----
         if (msg.type === 'bot:packet') {
             const session = bots.get(myId);
-            if (!session) { console.log(`[!] bot:packet — сессия не найдена: ${myId}`); return; }
+            if (!session) return;
             const relay = relays.get(session.relayId);
-            if (!relay) { console.log(`[!] bot:packet — relay не найден: ${session.relayId}`); return; }
-            console.log(`[>>] ${myId} → ${session.relayId} (${msg.data?.length} символов base64)`);
+            if (!relay) return;
             relay.ws.send(JSON.stringify({
                 type: 'relay:packet',
                 sessionId: myId,
@@ -110,8 +109,7 @@ wss.on('connection', (ws) => {
         // ---- ПАКЕТ ОТ RELAY → бот ----
         if (msg.type === 'relay:response') {
             const session_ws = findBotWs(msg.sessionId);
-            if (!session_ws) { console.log(`[!] relay:response — бот не найден: ${msg.sessionId}`); return; }
-            console.log(`[<<] ${msg.sessionId} ← relay (${msg.data?.length} символов base64)`);
+            if (!session_ws) return;
             session_ws.send(JSON.stringify({
                 type: 'bot:response',
                 data: msg.data
@@ -122,7 +120,6 @@ wss.on('connection', (ws) => {
 
     ws.on('close', () => {
         if (role === 'relay') {
-            console.log(`[relay-] ${myId}`);
             relays.delete(myId);
             for (const [sid, s] of bots) {
                 if (s.relayId === myId) {
@@ -133,7 +130,6 @@ wss.on('connection', (ws) => {
             }
         }
         if (role === 'bot') {
-            console.log(`[bot-] ${myId}`);
             const session = bots.get(myId);
             if (session) {
                 const relay = relays.get(session.relayId);
@@ -148,7 +144,7 @@ wss.on('connection', (ws) => {
         }
     });
 
-    ws.on('error', (err) => console.error(`[ws error] ${myId}:`, err.message));
+
 });
 
 function findBotWs(sessionId) {
@@ -158,7 +154,7 @@ function findBotWs(sessionId) {
 // --- запуск ---
 server.listen(0, async () => {
     const port = server.address().port;
-    console.log(`Сервер запущен на порту ${port}`);
+
 
     const listener = await ngrokmodule.connect({
         addr: port,
