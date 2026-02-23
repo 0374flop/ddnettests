@@ -37,14 +37,14 @@ function pickFreeRelay(preferredId) {
     return null;
 }
 
-// heartbeat: пингуем всех каждые 10с, если нет ответа — закрываем
+// heartbeat: пингуем всех каждые 2с, если нет ответа — закрываем
 setInterval(() => {
     wss.clients.forEach((client) => {
         if (client.isAlive === false) { client.terminate(); return; }
         client.isAlive = false;
         client.ping();
     });
-}, 10000);
+}, 2000);
 
 wss.on('connection', (ws) => {
     ws.isAlive = true;
@@ -182,6 +182,7 @@ function findBotWs(sessionId) {
 // --- запуск ---
 server.listen(0, async () => {
     const port = server.address().port;
+    console.log(`[local] ws://localhost:${port}`);
 
 
     const listener = await ngrokmodule.connect({

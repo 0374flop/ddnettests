@@ -6,6 +6,8 @@ const RELAY_ID   = process.env.RELAY_ID   || `relay-${Math.random().toString(36)
 
 // sessionId → { host, port } — куда слать UDP ответы
 const sessions = new Map();
+// "ip:port" → sessionId — быстрый маппинг для входящих UDP пакетов
+const addrToSession = new Map();
 
 const udpSocket = dgram.createSocket('udp4');
 udpSocket.bind(0, '0.0.0.0');
@@ -29,6 +31,8 @@ function connect() {
         }
 
         if (msg.type === 'relay:session_end') {
+            const s = sessions.get(msg.sessionId);
+            if (s && s.host) addrToSession.delete(`${s.host}:${s.port}`);
             sessions.delete(msg.sessionId);
         }
 
@@ -41,9 +45,10 @@ function connect() {
             const payload    = buf.slice(6);
 
             const session = sessions.get(msg.sessionId);
-            if (session) {
+            if (session && !session.host) {
                 session.host = ip;
                 session.port = targetPort;
+                addrToSession.set(`${ip}:${targetPort}`, msg.sessionId);
             }
 
             udpSocket.send(payload, targetPort, ip, (err) => {
@@ -54,6 +59,7 @@ function connect() {
 
     ws.on('close', () => {
         sessions.clear();
+        addrToSession.clear();
         scheduleReconnect();
     });
 
@@ -73,11 +79,9 @@ function scheduleReconnect() {
 // DDNet шлёт с того же ip:port куда мы слали — ищем сессию по host:port
 udpSocket.on('message', (data, rinfo) => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    for (const [sessionId, s] of sessions) {
-        if (s.host === rinfo.address && s.port === rinfo.port) {
-            ws.send(JSON.stringify({ type: 'relay:response', sessionId, data: data.toString('base64') }));
-            return;
-        }
+    const sessionId = addrToSession.get(`${rinfo.address}:${rinfo.port}`);
+    if (sessionId) {
+        ws.send(JSON.stringify({ type: 'relay:response', sessionId, data: data.toString('base64') }));
     }
 });
 
