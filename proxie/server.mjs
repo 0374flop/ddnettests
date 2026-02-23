@@ -81,6 +81,20 @@ wss.on('connection', (ws) => {
             relays.get(relayId).busy = true;
             bots.set(myId, { ws, relayId });
 
+            // автоосвобождение если бот умер без close события
+            const releaseRelay = () => {
+                const s = bots.get(myId);
+                if (!s) return;
+                const r = relays.get(s.relayId);
+                if (r) {
+                    r.busy = false;
+                    try { r.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: myId })); } catch {}
+                }
+                bots.delete(myId);
+            };
+            ws.once('close', releaseRelay);
+            ws.once('error', releaseRelay);
+
 
             ws.send(JSON.stringify({ type: 'bot:connected', sessionId: myId, relayId }));
 
@@ -89,6 +103,20 @@ wss.on('connection', (ws) => {
                 type: 'relay:session_start',
                 sessionId: myId
             }));
+            return;
+        }
+
+        // ---- ЯВНЫЙ ДИСКОННЕКТ БОТА ----
+        if (msg.type === 'bot:disconnect') {
+            const session = bots.get(myId);
+            if (session) {
+                const relay = relays.get(session.relayId);
+                if (relay) {
+                    relay.busy = false;
+                    try { relay.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: myId })); } catch {}
+                }
+                bots.delete(myId);
+            }
             return;
         }
 

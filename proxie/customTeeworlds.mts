@@ -99,8 +99,16 @@ const CustomTeeworlds: typeof Teeworlds = {
         }
 
         async Disconnect() {
-            this._ws?.close();
-            return super.Disconnect();
+            await super.Disconnect();
+            // Сначала шлём явный disconnect чтобы сервер освободил relay синхронно
+            if (this._ws?.readyState === WebSocket.OPEN) {
+                await new Promise<void>(resolve => {
+                    this._ws!.once('close', resolve);
+                    this._ws!.send(JSON.stringify({ type: 'bot:disconnect' }), () => {
+                        this._ws!.close();
+                    });
+                });
+            }
         }
     } as any
 };
