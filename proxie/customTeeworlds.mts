@@ -3,8 +3,6 @@ import WebSocket from 'ws';
 
 const SERVER_URL = 'wss://kit-touched-commonly.ngrok-free.app';
 
-let proxyDisconnect: (() => void) | null = null;
-
 const CustomTeeworlds: typeof Teeworlds = {
     ...Teeworlds,
     Client: class extends Teeworlds.Client {
@@ -15,13 +13,20 @@ const CustomTeeworlds: typeof Teeworlds = {
         }
 
         async connect() {
-            await this._setupProxy();
-            return super.connect();
+            // Ждём подключения к relay
+            const patchSend = await this._setupProxy();
+
+            // Патчим send ДО super.connect() — сокет уже существует (создан в конструкторе)
+            // super.connect() не пересоздаёт сокет если он уже есть
+            const socket: any = (this as any).socket;
+            socket.send = patchSend;
+
+            // super.connect() вешает socket.on('message') на этот же сокет
+            await super.connect();
         }
 
-        _setupProxy(): Promise<void> {
+        _setupProxy(): Promise<Function> {
             return new Promise((resolve, reject) => {
-                const socket: any = (this as any).socket;
                 const ws = new WebSocket(SERVER_URL);
                 this._ws = ws;
                 let connected = false;
@@ -50,10 +55,8 @@ const CustomTeeworlds: typeof Teeworlds = {
                         connected = true;
                         clearTimeout(timeout);
 
-                        const host = (this as any).host;
-                        const port = (this as any).port;
-
-                        socket.send = (
+                        // Возвращаем функцию-патч для socket.send
+                        const patchSend = (
                             buf: Buffer,
                             offset: number,
                             length: number,
@@ -73,18 +76,20 @@ const CustomTeeworlds: typeof Teeworlds = {
                             if (callback) callback(null, wrapped.length);
                         };
 
-                        proxyDisconnect = () => ws.close();
-                        resolve();
+                        resolve(patchSend);
                         return;
                     }
 
-                    // это уже после resolve, один обработчик для всего
+                    // Ответы от DDNet — эмитим на сокет
                     if (msg.type === 'bot:response') {
                         const buf = Buffer.from(msg.data, 'base64');
-                        socket.emit('message', buf, {
-                            address: (this as any).host,
-                            port: (this as any).port
-                        });
+                        const socket: any = (this as any).socket;
+                        if (socket) {
+                            socket.emit('message', buf, {
+                                address: (this as any).host,
+                                port: (this as any).port
+                            });
+                        }
                     }
                 });
 
@@ -94,9 +99,10 @@ const CustomTeeworlds: typeof Teeworlds = {
         }
 
         async Disconnect() {
+            this._ws?.close();
             return super.Disconnect();
         }
     } as any
 };
 
-export { CustomTeeworlds, proxyDisconnect };
+export { CustomTeeworlds };

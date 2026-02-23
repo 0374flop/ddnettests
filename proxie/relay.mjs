@@ -8,7 +8,9 @@ const RELAY_ID   = process.env.RELAY_ID   || `relay-${Math.random().toString(36)
 const sessions = new Map();
 
 const udpSocket = dgram.createSocket('udp4');
-udpSocket.bind();
+udpSocket.bind(0, '0.0.0.0', () => {
+    console.log(`[udp] слушаем на ${udpSocket.address().address}:${udpSocket.address().port}`);
+});
 
 let ws = null;
 let reconnectTimer = null;

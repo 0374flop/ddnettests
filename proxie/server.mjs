@@ -37,7 +37,19 @@ function pickFreeRelay(preferredId) {
     return null;
 }
 
+// heartbeat: пингуем всех каждые 10с, если нет ответа — закрываем
+setInterval(() => {
+    wss.clients.forEach((client) => {
+        if (client.isAlive === false) { client.terminate(); return; }
+        client.isAlive = false;
+        client.ping();
+    });
+}, 10000);
+
 wss.on('connection', (ws) => {
+    ws.isAlive = true;
+    ws.on('pong', () => { ws.isAlive = true; });
+
     let role = null;   // 'relay' | 'bot'
     let myId  = null;  // relayId или sessionId
 
@@ -126,8 +138,10 @@ wss.on('connection', (ws) => {
             if (session) {
                 const relay = relays.get(session.relayId);
                 if (relay) {
-                    relay.busy = false;  // <-- это уже есть
-                    relay.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: myId }));
+                    relay.busy = false;
+                    try {
+                        relay.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: myId }));
+                    } catch (e) {}
                 }
                 bots.delete(myId);
             }
