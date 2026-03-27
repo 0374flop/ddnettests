@@ -1,27 +1,34 @@
 import { WebSocketServer, WebSocket } from 'ws';
 import http from 'http';
-import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
+import * as ngrokmodule from '@ngrok/ngrok';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const ngrokmodule = await import('@ngrok/ngrok');
 const ngrokdata = fs.readFileSync(path.join(__dirname, 'ngrok.token'), { encoding: 'utf-8' }).trim().split(' ');
-const NGROK_TOKEN  = ngrokdata[0];
+const NGROK_TOKEN = ngrokdata[0];
 const NGROK_DOMAIN = ngrokdata[1];
+
+interface RelayEntry {
+    ws: WebSocket;
+    busy: boolean;
+}
+
+interface BotSession {
+    ws: WebSocket;
+    relayId: string;
+}
 
 const server = http.createServer();
 const wss = new WebSocketServer({ server });
 
-const relays = new Map(); // relayId → { ws, busy }
-const bots   = new Map(); // sessionId → { ws, relayId }
+const relays = new Map<string, RelayEntry>();
+const bots = new Map<string, BotSession>();
 
 let sessionCounter = 0;
 
-function pickFreeRelay(preferredId) {
+function pickFreeRelay(preferredId?: string | null): string | null {
     if (preferredId && relays.has(preferredId)) {
-        const r = relays.get(preferredId);
+        const r = relays.get(preferredId)!;
         if (!r.busy) return preferredId;
     }
     for (const [id, r] of relays) {
@@ -30,30 +37,41 @@ function pickFreeRelay(preferredId) {
     return null;
 }
 
-// heartbeat каждые 2с — обнаруживаем мёртвые соединения быстро
+function getTime() {
+    return new Date().toLocaleTimeString('ru-RU');
+}
+
 setInterval(() => {
-    wss.clients.forEach((client) => {
-        if (client.isAlive === false) { client.terminate(); return; }
+    wss.clients.forEach((client: any) => {
+        if (client.isAlive === false) { 
+            client.terminate(); 
+            return; 
+        }
         client.isAlive = false;
         client.ping();
     });
 }, 2000);
 
-wss.on('connection', (ws) => {
-    ws.isAlive = true;
-    ws.on('pong', () => { ws.isAlive = true; });
+wss.on('connection', (ws: WebSocket) => {
+    (ws as any).isAlive = true;
+    ws.on('pong', () => { (ws as any).isAlive = true; });
 
-    let role = null;
-    let myId  = null;
+    let role: 'relay' | 'bot' | null = null;
+    let myId: string = '';
 
-    ws.on('message', (raw) => {
-        let msg;
-        try { msg = JSON.parse(raw); } catch { return; }
+    ws.on('message', (raw: Buffer | ArrayBuffer | Buffer[]) => {
+        let msg: any;
+        try { 
+            msg = JSON.parse(raw.toString()); 
+        } catch { 
+            return; 
+        }
 
         if (msg.type === 'relay:register') {
             role = 'relay';
             myId = msg.id || `relay-${Date.now()}`;
             relays.set(myId, { ws, busy: false });
+            console.log(`[${getTime()}] Relay зарегистрирован: ${myId}`);
             ws.send(JSON.stringify({ type: 'relay:registered', id: myId }));
             return;
         }
@@ -61,6 +79,7 @@ wss.on('connection', (ws) => {
         if (msg.type === 'bot:connect') {
             const relayId = pickFreeRelay(msg.relayId);
             if (!relayId) {
+                console.log(`[${getTime()}] Bot: нет свободных relay`);
                 ws.send(JSON.stringify({ type: 'error', message: 'нет свободных relay' }));
                 ws.close();
                 return;
@@ -68,24 +87,28 @@ wss.on('connection', (ws) => {
 
             role = 'bot';
             myId = `session-${++sessionCounter}`;
-            relays.get(relayId).busy = true;
+            relays.get(relayId)!.busy = true;
             bots.set(myId, { ws, relayId });
 
+            console.log(`[${getTime()}] Bot подключён | Session: ${myId} | Relay: ${relayId}`);
+
+            const sid = myId;
             const releaseRelay = () => {
-                const s = bots.get(myId);
+                const s = bots.get(sid);
                 if (!s) return;
                 const r = relays.get(s.relayId);
                 if (r) {
                     r.busy = false;
-                    try { r.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: myId })); } catch {}
+                    try { r.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: sid })); } catch {}
                 }
-                bots.delete(myId);
+                bots.delete(sid);
             };
+
             ws.once('close', releaseRelay);
             ws.once('error', releaseRelay);
 
             ws.send(JSON.stringify({ type: 'bot:connected', sessionId: myId, relayId }));
-            relays.get(relayId).ws.send(JSON.stringify({ type: 'relay:session_start', sessionId: myId }));
+            relays.get(relayId)!.ws.send(JSON.stringify({ type: 'relay:session_start', sessionId: myId }));
             return;
         }
 
@@ -98,6 +121,7 @@ wss.on('connection', (ws) => {
                     try { relay.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: myId })); } catch {}
                 }
                 bots.delete(myId);
+                console.log(`[${getTime()}] Bot отключён вручную | Session: ${myId}`);
             }
             return;
         }
@@ -121,15 +145,18 @@ wss.on('connection', (ws) => {
 
     ws.on('close', () => {
         if (role === 'relay') {
+            console.log(`[${getTime()}] Relay отключился: ${myId}`);
             relays.delete(myId);
             for (const [sid, s] of bots) {
                 if (s.relayId === myId) {
                     s.ws.send(JSON.stringify({ type: 'error', message: 'relay отключился' }));
                     s.ws.close();
                     bots.delete(sid);
+                    console.log(`[${getTime()}] Bot принудительно отключён из-за падения relay | Session: ${sid}`);
                 }
             }
         }
+
         if (role === 'bot') {
             const session = bots.get(myId);
             if (session) {
@@ -139,21 +166,22 @@ wss.on('connection', (ws) => {
                     try { relay.ws.send(JSON.stringify({ type: 'relay:session_end', sessionId: myId })); } catch {}
                 }
                 bots.delete(myId);
+                console.log(`[${getTime()}] Bot отключился | Session: ${myId}`);
             }
         }
     });
 });
 
 server.listen(0, async () => {
-    const port = server.address().port;
-    console.log(`[local] ws://localhost:${port}`);
-
+    const addr = server.address() as { port: number };
+    console.log(`[${getTime()}] Сервер запущен на порту ${addr.port}`);
+    
     const listener = await ngrokmodule.connect({
-        addr: port,
+        addr: addr.port,
         authtoken: NGROK_TOKEN,
         domain: NGROK_DOMAIN
     });
 
-    const urlWs = listener.url().replace('https://', 'wss://').replace('http://', 'ws://');
-    console.log(`[ngrok] ${urlWs}`);
+    const urlWs = listener.url()!.replace('https://', 'wss://').replace('http://', 'ws://');
+    console.log(`[${getTime()}] Ngrok туннель: ${urlWs}`);
 });

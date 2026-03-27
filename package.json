@@ -13,7 +13,7 @@
   "dependencies": {
     "@ngrok/ngrok": "^1.7.0",
     "@roamhq/wrtc": "^0.9.1",
-    "ddbot.js-0374": "^3.2.1",
+    "ddbot.js-0374": "^4.4.0",
     "ddmaster": "^2.3.0",
     "franc": "^6.2.0",
     "loger0374": "^0.4.1",
