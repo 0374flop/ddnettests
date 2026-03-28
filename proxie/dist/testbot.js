@@ -82,15 +82,18 @@ function createBot(options) {
             if (!client)
                 return;
             const color = (0, reconstruct_color_1.getRandomSaturatedColor)();
-            client.game.ChangePlayerInfo({
-                name: "1",
-                clan: "Towa Team",
-                skin: "m_buoumao",
-                use_custom_color: 1,
-                country: 804,
-                color_body: color,
-                color_feet: color
-            });
+            try {
+                client.game.ChangePlayerInfo({
+                    name: "1",
+                    clan: "Towa Team",
+                    skin: "m_buoumao",
+                    use_custom_color: 1,
+                    country: 804,
+                    color_body: color,
+                    color_feet: color
+                });
+            }
+            catch { }
         }, 5000);
     });
     bot.on('snapshot', () => {

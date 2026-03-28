@@ -4,15 +4,15 @@ import { CustomTeeworlds } from './customTeeworlds';
 // @ts-ignore
 import { reconstructPlayerInput, getRandomSaturatedColor } from './reconstruct+color';
 
-type Mode = 1 | 2 | 3;
+export type Mode = 1 | 2 | 3;
 
-type CreateBotOptions = {
+export type CreateBotOptions = {
     server: string;
     id?: number;
     mode?: Mode;
 };
 
-type InputRecord = {
+export type InputRecord = {
     raw: {
         ddnetChar: any;
         char: any;
@@ -20,7 +20,15 @@ type InputRecord = {
     input: any;
 };
 
-export function createBot(options: CreateBotOptions) {
+export type createBotout = {
+    bot: ddbot.Bot;
+    start(): Promise<void>;
+    stop(): Promise<void>;
+    setID(newid: number): void;
+    setMode(mode: Mode): void;
+}
+
+export function createBot(options: CreateBotOptions): createBotout {
     const bot = new ddbot.Bot(undefined, undefined, CustomTeeworlds);
 
     const [address, portStr] = options.server.split(':');
@@ -67,7 +75,7 @@ export function createBot(options: CreateBotOptions) {
 
             const color = getRandomSaturatedColor();
 
-            client.game.ChangePlayerInfo({
+            try { client.game.ChangePlayerInfo({
                 name: "1",
                 clan: "Towa Team",
                 skin: "m_buoumao",
@@ -75,7 +83,7 @@ export function createBot(options: CreateBotOptions) {
                 country: 804,
                 color_body: color,
                 color_feet: color
-            });
+            }); } catch {}
         }, 5000);
     });
 
