@@ -2,8 +2,8 @@ import * as ddbot from 'ddbot.js-0374';
 import { franc } from 'franc';
 import { getActiveeuServers } from './eu';
 import { translateText, ensureServer, gracefulShutdown } from './translate';
-import * as ddmaster from 'ddmaster';
-
+import * as rumas2 from 'rumas2';
+const Cteeworlds = rumas2.createCustomTeeworlds('wss://kit-touched-commonly.ngrok-free.app');
 const activeBots: ddbot.Bot[] = [];
 
 export async function main(addrr: string, nameBot: string = 'TranslatorBot'): Promise<ddbot.Bot> {
@@ -18,7 +18,7 @@ export async function main(addrr: string, nameBot: string = 'TranslatorBot'): Pr
     identity.color_feet = 16711680;
     identity.country = 804;
 
-    const bot = new ddbot.Bot(identity);
+    const bot = new ddbot.Bot(identity, undefined, Cteeworlds);
     activeBots.push(bot);
 
     // Модуль чата
