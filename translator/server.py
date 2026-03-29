@@ -1,74 +1,121 @@
-# server.py ДЛЯ СПРАВКИ ПИТОН ПИСАЛ НЕ Я А ИИ, тут надо кстати "pip install flask argostranslate requests"
-from flask import Flask, request, jsonify
+# server.py
+# pip install fastapi uvicorn argostranslate
 import os
+import sys
+import signal
+import asyncio
+from contextlib import asynccontextmanager
+from pathlib import Path
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import uvicorn
 import argostranslate.package
 import argostranslate.translate
-import threading
-import time
-import requests
 
-app = Flask(__name__)
+# ─── конфиг ──────────────────────────────────────────────────────────────────
 
-ru_en_path = "transmodels/translate-ru_en-1_9.argosmodel"
-en_ru_path = "transmodels/translate-en_ru-1_9.argosmodel"
-PID_FILE = ".server.pid"
-READY_FILE = ".server.ready"
+PORT       = 5000
+HOST       = '127.0.0.1'
 
-def write_ready():
+# пути всегда относительно самого server.py, а не cwd
+BASE_DIR   = Path(__file__).parent
+MODEL_DIR  = BASE_DIR / 'transmodels'
+PID_FILE   = BASE_DIR / '.server.pid'
+READY_FILE = BASE_DIR / '.server.ready'
+
+MODELS = {
+    ('ru', 'en'): MODEL_DIR / 'translate-ru_en-1_9.argosmodel',
+    ('en', 'ru'): MODEL_DIR / 'translate-en_ru-1_9.argosmodel',
+}
+
+# ─── загрузка моделей ─────────────────────────────────────────────────────────
+
+def load_models() -> None:
+    missing = [str(p) for p in MODELS.values() if not p.exists()]
+    if missing:
+        print(f'[!] Не найдены модели: {", ".join(missing)}', file=sys.stderr)
+        sys.exit(1)
+
+    print('Загрузка моделей Argos Translate...')
+    for p in MODELS.values():
+        argostranslate.package.install_from_path(str(p))
+
+    # прогрев — чтобы первый реальный запрос не тупил
+    argostranslate.translate.translate('тест', 'ru', 'en')
+    argostranslate.translate.translate('test', 'en', 'ru')
+    print('Модели загружены и прогреты.')
+
+# ─── pid файлы ────────────────────────────────────────────────────────────────
+
+def write_pid_files() -> None:
     pid = os.getpid()
-    with open(PID_FILE, "w") as f: f.write(str(pid))
-    with open(READY_FILE, "w") as f: f.write(str(pid))
-    print(f"Сервер полностью готов! PID {pid}")
+    PID_FILE.write_text(str(pid))
+    READY_FILE.write_text(str(pid))
+    print(f'Сервер готов! PID {pid}')
 
-print("Загрузка моделей Argos Translate...")
-for path in (ru_en_path, en_ru_path):
-    if os.path.exists(path):
-        argostranslate.package.install_from_path(path)
+def cleanup_pid_files() -> None:
+    PID_FILE.unlink(missing_ok=True)
+    READY_FILE.unlink(missing_ok=True)
 
-argostranslate.translate.translate("тест", "ru", "en")
-argostranslate.translate.translate("test", "en", "ru")
-print("Модели загружены в память")
+# ─── приложение ───────────────────────────────────────────────────────────────
 
-@app.route("/translate", methods=["POST"])
-def translate():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    write_pid_files()
+    yield
+    cleanup_pid_files()
+    print('Пока!')
+
+app = FastAPI(lifespan=lifespan)
+
+class TranslateRequest(BaseModel):
+    text: str
+    source: str = 'ru'
+    target: str = 'en'
+
+@app.post('/translate')
+async def translate(req: TranslateRequest):
+    text = req.text.strip()
+    if not text:
+        raise HTTPException(status_code=400, detail='Пустой текст')
+
+    pair = (req.source, req.target)
+    if pair not in MODELS:
+        raise HTTPException(
+            status_code=400,
+            detail=f'Языковая пара не поддерживается: {req.source} → {req.target}'
+        )
+
     try:
-        data = request.get_json(force=True)
-        text = data.get("text", "").strip()
-        source = data.get("source", "ru")
-        target = data.get("target", "en")
-        if not text:
-            return jsonify({"error": "Пустой текст"}), 400
-        result = argostranslate.translate.translate(text, source, target)
-        return jsonify({"translatedText": result})
+        # argostranslate синхронный — запускаем в пуле потоков чтобы не блокировать event loop
+        loop = asyncio.get_running_loop()
+        result = await loop.run_in_executor(
+            None,
+            lambda: argostranslate.translate.translate(text, req.source, req.target)
+        )
+        return {'translatedText': result}
     except Exception as e:
-        print(f"Ошибка: {e}")
-        return jsonify({"error": str(e)}), 500
+        print(f'[!] Ошибка перевода: {e}', file=sys.stderr)
+        raise HTTPException(status_code=500, detail=str(e))
 
-if __name__ == "__main__":
-    import logging
-    log = logging.getLogger('werkzeug')
-    log.setLevel(logging.ERROR)
+@app.get('/health')
+async def health():
+    return {'status': 'ok'}
 
-    threading.Thread(target=app.run, kwargs={
-        "host": "127.0.0.1", "port": 5000, "threaded": True
-    }, daemon=True).start()
+# ─── запуск ───────────────────────────────────────────────────────────────────
 
-    print("Ожидание запуска Flask...")
-    for _ in range(50):
-        try:
-            r = requests.get("http://127.0.0.1:5000/", timeout=0.5)
-            if r.status_code == 404:
-                write_ready()
-                break
-        except:
-            time.sleep(0.5)
-    else:
-        print("Не удалось поднять Flask")
-        exit(1)
+if __name__ == '__main__':
+    load_models()
 
-    print("Сервер работает! Нажми Ctrl+C для остановки")
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("Пока!")
+    def handle_signal(sig, frame):
+        pass
+    signal.signal(signal.SIGINT, handle_signal)
+
+    uvicorn.run(
+        app,
+        host=HOST,
+        port=PORT,
+        log_level='error',
+        access_log=False,
+    )

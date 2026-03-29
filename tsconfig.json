@@ -9,5 +9,5 @@
     "skipLibCheck": true,
     "esModuleInterop": true
   },
-  "include": ["map/", "server/"]
+  "include": ["map/", "server/", "translator/"],
 }

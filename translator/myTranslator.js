@@ -1,22 +1,56 @@
-const { main, getBotname } = require('./translator-bot.js');
-const ddmaster = require('ddmaster');
-const { bot } = require('ddbot.js-0374');
-
-const nameman = '0374_bober';
-
-async function start() {
-    bot.removeBot(getBotname());
-    const servers = await ddmaster.findDDNetPlayerByName(nameman);
-    const serverAddresses = await ddmaster.getDDNetServers(servers);
-    if (serverAddresses.length === 0) {
-        console.log(`Игрок ${nameman} не найден на серверах ДДНета.`);
-    } else {
-        console.log(`Игрок ${nameman} найден на серверах:`, serverAddresses);
-        main(serverAddresses[0], 'TranslatorBot');
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
     }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+const translator_bot_1 = require("./translator-bot");
+const ddmaster = __importStar(require("ddmaster"));
+const PLAYER_NAME = '0374_bober';
+const INTERVAL_MS = 300_000; // 5 минут
+let currentBot = null;
+async function start() {
+    if (currentBot) {
+        currentBot.destroy(); // destroy сам отключает и чистит все listeners включая Reconnect
+        currentBot = null;
+    }
+    const servers = await ddmaster.findDDNetPlayerByName(PLAYER_NAME);
+    const serverAddresses = await ddmaster.getDDNetServers({ servers });
+    if (serverAddresses.length === 0) {
+        console.log(`Игрок ${PLAYER_NAME} не найден на серверах ДДНета.`);
+        return;
+    }
+    console.log(`Игрок ${PLAYER_NAME} найден на серверах:`, serverAddresses);
+    currentBot = await (0, translator_bot_1.main)(serverAddresses[0], 'TranslatorBot');
 }
-
 start();
-setInterval(async () => {
-    await start();
-}, 300000);
+setInterval(start, INTERVAL_MS);

@@ -926,3 +926,650 @@ TranslatorBot2 connected to 45.141.57.22:8374
 [ bot : log ] 45.141.57.22:8324 TranslatorBot1 21 0 '[D] Chiz1ck' : отдай dedinsult228
 [ bot : log ] 45.141.57.22:8324 TranslatorBot1 1 0 'TranslatorBot' : [D] Chiz1ck: dedinsult228
 [ bot : log ] 45.141.57.22:8324 TranslatorBot1 3 0 'пидор' : урод ебаный
+
+PS D:\proektiki\всякое\aiddbot> node .\translator\myTranslator.js
+health check: { status: 'ok' }
+Игрок 0374_bober найден на серверах: [ '45.141.57.22:8306' ]
+TranslatorBot connected to 45.141.57.22:8306
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : Ку всем
+45.141.57.22:8306 TranslatorBot 22 0 'fox' : свага:  тут пк я нав нем в шарики не умею
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : fox: Svaga: here I put it in the balls do not know
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: норм оправдания
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : (2)donk666♢: kavunow: norms of justification
+45.141.57.22:8306 TranslatorBot 22 0 'fox' : свага:  мне с телефыона анбо
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : fox: Swag: I'm from telefyon anbo
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : кеу
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 15 0 'опасный' : го перетягивание
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : [svg] kemakai: kew
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : ку
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : donk666♢: ну пошли в тиму я хз
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : ку
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : дай дс
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : [svg] kemakai: ds
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: дак ливать будешь девочка?
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : жлгк сучка ты где
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (1)donk666♢: ты же мне пиздел то что у меня софт да?
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : kavunow: 1donk666: You gave me what I have, right?
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : мы с люлей
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : [svg] kemakai: we're with lula
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : донк
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : рил опасный
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : bloody: rigging
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : аж сам упал
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : bloody: He fell himself.
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: ты же мне пиздел то что у меня софт да?
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : жонк алё блядина
+45.141.57.22:8306 TranslatorBot 15 0 'опасный' : бывает
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : опасный: happen
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : АХАХАХ
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: не утверждал, сказал просто так потому что почти у всех софт на люнере
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : kavunow: AHAHAH
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: мда
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : kavunow: (2)donk666:: мф
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: так скажал же
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : kavunow: (2) Donk666 с: so he said
+45.141.57.22:8306 TranslatorBot 22 0 'fox' : опасный:  ты безопасный
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : fox: dangerous: you're safe
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: ты где? пиздить тебя хочу так же как в тиме
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : на миду
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : na lirike: midlet
+45.141.57.22:8306 TranslatorBot 10 0 '(2)donk666♢' : kavunow: сказал
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: ну
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : kavunow: (2)donk666:: ну
+45.141.57.22:8306 TranslatorBot 10 0 '(2)donk666♢' : kavunow: нууу
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : (2)donk666♢: Кавунов: нууу
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: иииииии
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : (2)donk666♢: Кавунов: и соки
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: нуу значит пиздабол и я ливнул потому что у тебя тоже аутизм
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : kavunow: (2) Donk666 ну: Well, it means pusdaball and I'm down because you have autism, too.
+45.141.57.22:8306 TranslatorBot 22 0 'fox' : минетоделы
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : fox: mortars
+45.141.57.22:8306 TranslatorBot 22 0 'fox' : пощол напхуй
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : fox: slap
+45.141.57.22:8306 TranslatorBot 10 0 '(2)donk666♢' : kavunow: ты не ливнул
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: а что я сделал
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : kavunow: (2) Donk666:: What did I do?
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: ты играл со своими 7 дамиками ещё около часа, потом ливнул потому что пошёл спать
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : (2)donk666♢: kavunow: You played with your 7 ladies for about an hour, then showered because you went to bed
+45.141.57.22:8306 TranslatorBot 22 0 'fox' : TranslatorBot:  пошол нахуй
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : fox: ПереводчикBot:
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: 1 я играл со своих семи дамми потому что людям нравилось и прост по фану 2 я тогда не ишел спать 3 ты тотальный пиздабол
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : kavunow: (2) Donk666 : 1 I played with my seven ladies because people liked it and were simple in fanaticism 2 I didn't go to bed 3 you're a total pussy.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : каким образом блять я ебнулся во фриз
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 23 0 'TranslatorBot' : na lirike: How the fuck did I fuck in a frieze?
+TranslatorBot disconnected from 45.141.57.22:8306: null
+Игрок 0374_bober найден на серверах: [ '45.141.57.22:8306' ]
+TranslatorBot connected to 45.141.57.22:8306
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : Ку всем
+45.141.57.22:8306 TranslatorBot 41 0 'уборщик' : kto tam?
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : уборщик: Кто там?
+45.141.57.22:8306 TranslatorBot 31 0 'DRIM' : ХУЛИ ТЫ ДЕЛАЕШЬ
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : DRIM: Fuck you do.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : меня колобком придавило
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : na lirike: I was pinned down with my colab.
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: и че ты молчишь
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : kavunow: (2) Donk666: Why are you silent?
+45.141.57.22:8306 TranslatorBot 10 0 '(2)donk666♢' : kavunow: в чём я пиздабол? ты не ливал после своего луза около часа, хотя я тебе напоминал, получаеться что ты ливнул токо тогда когда захотел
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : (2)donk666♢: kavunow: what am I fucking in? you didn't puke after your loo for about an hour, although I reminded you, it turns out that you poured a current when you wanted to.
+45.141.57.22:8306 TranslatorBot 21 0 'Kᴋɛʀᴀ♡' : DRIM: твоя мать сдохнет
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : донг хэлпа пж
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : [svg] kemakai: Dong Helpa
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: бля ты реально с аутизмом
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : kavunow: (2) Donk666: You're really fucking with autism
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: ты говоришь что честно ливнул, хотя ты ливнул токо тогда когда тебе стало скучно играть
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : (2)donk666♢: kavunow: You say you showered honestly, even though you poured a toko when you got bored playing
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: это не одно и тоже
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : (2)donk666♢: kavunow: it's not the same thing
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: я не говорю что я честно ливнул
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : kavunow: (2) Donk666: I'm not saying I've showered honestly
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: я говорю то что ты пиздабол ведь я мог ливнуть если ты как и все сказал то что у 
+меня софт и я сказал пиздец иди лечись ну вся хуйня
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : kavunow: (2) Donk666ч: I'm saying you're a pussy because I could have rained if you said like everyone else that I have software and I said fuck you go fuck yourself.
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: дак значит ты не ливал по правилам игры, это тоже самое что я сыграю с типом на 
+лив год, проебу, а ливну токо через 5 лет
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : (2)donk666♢: kavunow: Dak means you didn’t shower according to the rules of the game, it’s the same as I’ll play with a type for a rainy year, fuck, and a shower of current in 5 years.
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : донг памаги пж
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: ну пошли щас 1о1
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : [svg] kemakai: dong pamagh
+45.141.57.22:8306 TranslatorBot 31 1 'DRIM' : НУ И НАХУЯ
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : DRIM: Fuck you.
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: блять, я тебе нахуй могу не отвечать и не говорить не чего, но ты всё равно должен был ливнуть, потому что ты был согласен на правила
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : (2)donk666♢: I don't fucking have to answer you or say anything, but you had to shower 
+anyway because you agreed to the rules.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : я устала
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : na lirike: I'm tired.
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : донг
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : памаги пж
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : [svg] kemakai: pamaga
+45.141.57.22:8306 TranslatorBot 15 0 'опасный' : ну го в вс
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : опасный: well
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : гііі
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : na lirike: hygiene
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : гыы
+45.141.57.22:8306 TranslatorBot 15 0 'опасный' : го?
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : опасный: Go?
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: ну типо ты мог это и с начала сказать то что ты тоже нихуя не помнишь
+45.141.57.22:8306 TranslatorBot 15 0 'опасный' : в вс
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : ебало вальни
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : ныы
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : na lirike: now
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : ны магу
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : na lirike: magu
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : че сразу про маму других слов не то
+45.141.57.22:8306 TranslatorBot 15 0 'опасный' : поч?
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : ок
+45.141.57.22:8306 TranslatorBot 22 0 'TranslatorBot' : опасный: post?
+TranslatorBot disconnected from 45.141.57.22:8306: null
+Игрок 0374_bober найден на серверах: [ '45.141.57.22:8306' ]
+TranslatorBot connected to 45.141.57.22:8306
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : Ку всем
+45.141.57.22:8306 TranslatorBot 26 0 'Люля' : ты мяч
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : я твоя мать стреляй в меня
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : Люля: ball
+45.141.57.22:8306 TranslatorBot 15 0 'опасный' : транс
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : опасный: trance
+45.141.57.22:8306 TranslatorBot 15 0 'опасный' : че те
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : есть такое
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : в маму стреояет
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : na lirike: there
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : ой
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : а че такое
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : зассал
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : bloody: What is it?
+45.141.57.22:8306 TranslatorBot 19 0 'QCold' : да
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : пизда
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : bloody: pussy
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : вы ячи
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : [svg] kemakai: You're me.
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: блять, сам факт того что ты не ливнул, это показало мне что у тебя нет достоинства и чесности, по этому я не буду с тобой больше играть 1в1
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : (2)donk666♢: The fact that you didn’t shower showed me that you don’t have dignity and 
+honesty, so I won’t play 1v1 with you anymore.
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: ок
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : kavunow: (2)donk666 : ок
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: ты мог просто написать то что ты не будешь
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : kavunow: (2) Donk666: You could just write something you wouldn't
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : TranslatorBot: блять ты долбоеб дословно переводишь
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : kavunow: TranslatorBot: You're fucking literal.
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : TranslatorBot: хуйня какая то
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : kavunow: ПереводчикBot: хёйдоун
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: ты был согласен на правила и не выполнил их, можешь придумывать отмазки, но ты слово дал, так же его забрал
+45.141.57.22:8306 TranslatorBot 13 0 'шершень' : что за интелегенция здесь собралась
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 21 0 'SOSALKA' : еблан?
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : шершень: What kind of intelligence gathered here?
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: ок
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : TranslatorBot: What do you want, you son of a bitch
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : kavunow: (2)donk666 : ок
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : не даставай
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : na lirike: don't let me.
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: и что я должен щас сделать
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : kavunow: (2) Donk666 : and what should I do now
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: не чего, ты уже вчера всё сделал
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : (2)donk666♢: Don’t worry, you did everything yesterday.
+45.141.57.22:8306 TranslatorBot 26 0 'Люля' : кто мячом будетт?
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : Люля: Who's the ball?
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: ну вот
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow:  что вот
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : (2)donk666♢: Кавунов:
+45.141.57.22:8306 TranslatorBot 10 0 '(2)donk666♢' : TranslatorBot: что?
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : (2)donk666♢: Переводчик:
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : меня пиздят
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : na lirike: I'm fucked.
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : да этот долбоеб просто бот
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : kavunow: That motherfucker is a bot.
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : он дословно переводит (2)donk666♢
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : kavunow: He literally translates (2)donk666ит
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : уйди
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : bloody: leave
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : kavunow: пон
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : (2)donk666♢: Кавунов: Ун
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : (2)donk666♢: и получается хуйня
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : донг дай дами
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : [svg] kemakai: dami
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : Leave me alone you faggot
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : bloody: Оставь меня в покое, педик
+45.141.57.22:8306 TranslatorBot 6 0 'kavunow' : шершень: бб а то не дай бог еще кикнет и забанет за афк
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : kavunow: hornet: bb, or God forbid another kick and ban for afk
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : [svg] kemakai: нету
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 13 0 'шершень' : давац удачи
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : (2)donk666♢: [svg] кемакай:
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : I didn't even touch you, you fucking bitch
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : bloody: Я даже не прикасался к тебе, сука!
+45.141.57.22:8306 TranslatorBot 8 0 'ричард п' : что ты делаешь даун
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : ричард п: What are you doing down?
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : where did you come from, you fucking hole-in-the-ass
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : bloody: Откуда ты взялся, ебаная дыра в заднице
+45.141.57.22:8306 TranslatorBot 23 0 '0374_bober' : мда
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 16 0 'TranslatorBot' : 0374_bober: lamb
+TranslatorBot disconnected from 45.141.57.22:8306: null
+Игрок 0374_bober найден на серверах: [ '45.141.57.22:8306' ]
+TranslatorBot connected to 45.141.57.22:8306
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : Ку всем
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : why are you fucking with me I didn't even touch you, you son of a bitch
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : bloody: Почему ты трахаешься со мной, я даже не прикоснулся к тебе, сукин ты сын
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : I don't understand if you're Russian or not.
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : bloody: Я не понимаю, русский ты или нет.
+45.141.57.22:8306 TranslatorBot 22 0 '[D] ричар' : иди нахуй
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : [D] ричар: Fuck you.
+45.141.57.22:8306 TranslatorBot 23 0 '0374_bober' : не понимай
+45.141.57.22:8306 TranslatorBot 22 0 '[D] ричар' : я сам
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : люля не удобмноо он передал прости
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : [svg] kemakai: I'm sorry. I'm sorry.
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : ебать у него переваод хуярит
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : ты ебалн
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : bloody: you fucker
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : [svg] kemakai: ну тип помешал
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: [svg] kemakai: well, the type interfered
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : shut the fuck up son of a whore
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : bloody: Заткнись, блядь, сын шлюхи.
+45.141.57.22:8306 TranslatorBot 8 0 'ричард п' : сын блядина гннойнной
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : ричард п: pussy
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : онли от хелпы
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : хумла
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: helpless
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : хуила
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : 0374_bober: ты ебланэ
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: hula
+45.141.57.22:8306 TranslatorBot 23 0 '0374_bober' : не
+45.141.57.22:8306 TranslatorBot 21 0 'SOSALKA' : я ят вытащил\
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : нахуй ты за мной ходишь
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : SOSALKA: I got it out.
+45.141.57.22:8306 TranslatorBot 23 0 '0374_bober' : нада
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : 0374_bober: flat
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : для чего
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : bloody: why
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : смысл
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : bloody: sense
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : меня же все равно достанут
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: I'm still gonna get hit.
+45.141.57.22:8306 TranslatorBot 23 0 '0374_bober' : ну нада
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : для чего
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : bloody: why
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : зачем сасешь
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : bloody: Why suck?
+45.141.57.22:8306 TranslatorBot 29 0 'bloody' : ай блять
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : bloody: fuck
+TranslatorBot disconnected from 45.141.57.22:8306: null
+Игрок 0374_bober найден на серверах: [ '45.141.57.22:8306' ]
+TranslatorBot connected to 45.141.57.22:8306
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : Ку всем
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : ахахахахахахах
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: ahahahahaha
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : TranslatorBot: ты подглядываешь?
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: TranslatorBot: Are you peeping?
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : paradise: не хелпай всех пж
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: Paradise: Don't Help Everyone
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : нееж
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: nigh
+45.141.57.22:8306 TranslatorBot 7 1 'na lirike' : нееет
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : пизда тебе кен
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: pussy
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : я твоей матере легкие пробью
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: I'll break your mother's lungs.
+45.141.57.22:8306 TranslatorBot 24 0 '[svg] kemakai' : люля любя стреляла
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : [svg] kemakai: lovingly shot
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: спс за минет
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: na lirike: spas for a blowjob
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : пошли тиму
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: Let's go.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : кен
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : хвыазхаы
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: khwazha
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : кен алёё
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: ken
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : автолузник ?
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : мы вас все время трахали(
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: We fucked you all the time.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : я думал вам нравится когда вас ебут
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: I thought you liked being fucked.
+45.141.57.22:8306 TranslatorBot 5 0 '[D] KeN' : я только недавно зашел о каком все время тьі говоришь
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : [D] KeN: I've just stopped by what you're talking about.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : автолузище ебаное
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 10 0 '(2)donk666♢' : KeN: не иди с ним 1 на 1, он мне автолузнул и не ливает
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: fucker
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : KeN: он не ливнет если проебёт
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: He won't rain if he fucks up.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : попизди
+45.141.57.22:8306 TranslatorBot 10 0 '(2)donk666♢' : na lirike: а не так было?
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: What happened?
+45.141.57.22:8306 TranslatorBot 5 0 '[D] KeN' : по нему видно
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : [D] KeN: see
+45.141.57.22:8306 TranslatorBot 7 1 'na lirike' : вообще не так
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : жду
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : мид
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: wait
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : суки
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: ты ещё и пиздобол оказываеться
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: Na lirike: You're also a pussy.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : пруфани что это было
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: Prufani what was it?
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: 3 0 cry
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: На лирике: 3 0 крик
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : щас я габу вкину подожди
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: I'm gonna throw the gab in now.
+TranslatorBot disconnected from 45.141.57.22:8306: null
+Игрок 0374_bober найден на серверах: [ '45.141.57.22:8306' ]
+TranslatorBot connected to 45.141.57.22:8306
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : Ку всем
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : стой
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: stand
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : опрос
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : сосалка уебище на подсосе
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: sucker
+45.141.57.22:8306 TranslatorBot 21 0 'SOSALKA' : отсоси
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : SOSALKA: suck
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : ты тиму хоть пойдешь ?
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: Are you even going to smoke?
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: это ты снимаешь видио в тик ток танцую габу на имя Артём?
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : или ччё там
+45.141.57.22:8306 TranslatorBot 4 0 'winterwoter' : gjb
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : ты чё торчишь ?
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: What are you doing?
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : какое танцую габу на имя артем
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: What kind of gaba dance in the name of Artem
+45.141.57.22:8306 TranslatorBot 10 0 '(2)donk666♢' : na lirike: дак ты ливни на неделю, через неделю пайду
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: ты же на неделю проебалэ
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: Na lirike: You're the fucker for a week
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : чё ты себе придумываешь хуила
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: What the fuck are you doing?
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : 2 2 был счёт
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: 2 2 was the score.
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : paradise: я одного типа блокаю токо
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: Paradise: I'm one type of toco blocker
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : paradise: не хулпай
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: Рай: хулпай
+45.141.57.22:8306 TranslatorBot 20 0 'paradise' : alr
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : жоо
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: joo
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : доо
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : достань
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: get out
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : фокус покажу
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: ливай на 7 дней
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: na lirike: water for 7 days
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : не обязан,я не проебал
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: I don't have to.
+45.141.57.22:8306 TranslatorBot 25 0 'KeN' : я думал уже ливнул
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : KeN: прикинь мне эта обсосина na lirike  уже 5 0 проебал
+45.141.57.22:8306 TranslatorBot 21 0 'SOSALKA' : ебаные дауны сука
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : SOSALKA: motherfucker
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : пойдешь тиму проебу нормально тогда ливну
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: You're gonna go fuck yourself. It's gonna rain.
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : KeN: он мне 1 на 1 автолузнул и не ливает скотина
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : сука пиздец ты гнида подворная ты меня блокаешь и пишешь 5 0 проебал
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: KeN: He's got me 1 in 1 carhole and doesn't water a beast
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: нету тебе вери свинота
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: Don’t believe the pigs, don’t believe them.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : тебя аллах накажет
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: God will punish you.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : великая свинка тебе даст по жопе
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: Great pig will kick your ass.
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: ну без шуток, ты рили бомжара, токо дефаться и умеешь
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : олях придет
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: ol's coming
+45.141.57.22:8306 TranslatorBot 4 0 'winterwoter' : помогите пж
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : winterwoter: help the porch
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : так ты в тиме онли пытался задефаться
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: So you're in the teme only trying to zip.
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: не, я масульманин
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: No, I am a Masulman.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : кен тиму пошли хуила алёё
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: Go fuck yourself.
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : KeN: он же сейчас абидеться на тебя и заплачет)
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: KeN: He's going to cry on you right now.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : ты же стреляешь фрк
+45.141.57.22:8306 TranslatorBot 25 0 'KeN' : а так тьі слабьій
+TranslatorBot disconnected from 45.141.57.22:8306: null
+Игрок 0374_bober найден на серверах: [ '45.141.57.22:8306' ]
+TranslatorBot connected to 45.141.57.22:8306
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : Ку всем
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : заглотни
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: swallow
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' :  na na lirike свиньи стоко не живут
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : отсосал за секундку
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: sucked in a second
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : ХВАЫЗХЫХЗАЫ
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: HUIZA
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : 2 0 соси
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: свинья, ты такая тупая
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: Pig, you are so stupid.
+45.141.57.22:8306 TranslatorBot 25 0 'KeN' : соси давай
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : KeN: Suck it.
+45.141.57.22:8306 TranslatorBot 10 0 '(2)donk666♢' : na lirike:  тебя кен в пол силы ебёт, свиноматка
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: Na lirike: you're half-hearted, sow.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : я в фриз залез сам но главное показать себя крутым вау бля ьраво бос
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: I'm in the frieze myself, but the main thing is to show myself to be cool wow fucking boss.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : пострелять
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: shoot
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : это ваще
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : главное
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: principal
+45.141.57.22:8306 TranslatorBot 25 0 'KeN' : какой пол сильі у меня их нет в 4 часа ночи
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : KeN: What kind of power do I not have at 4 a.m.?
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : ты где
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : не слышу
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : кен
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: where
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: ken
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : ты где маленький
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: Where's the little one?
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : KeN: дак прикинь, он же ещё думает что он сильно играет
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: KeN: Well, guess what, he still thinks he's playing hard.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : о кен соло не вывоз так к нему дружок прибежал
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: I didn't take him out so my friend ran to him.
+45.141.57.22:8306 TranslatorBot 25 0 'KeN' : я ебал тут файтиться
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : соснула
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: sucker
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: молодец, смог когда я не чего не делал
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: Well done, when I didn’t do anything.
+45.141.57.22:8306 TranslatorBot 10 1 '(2)donk666♢' : na lirike: уже есть прогрес свинка
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : (2)donk666♢: Na lirike: There's already a mumps progress
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : чё ты пиздишь
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: What the fuck are you?
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : не пнимаю
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: don't kick
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : нее
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: her
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : донк тыы где
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: Where are you?
+TranslatorBot disconnected from 45.141.57.22:8306: null
+Игрок 0374_bober найден на серверах: [ '45.141.57.22:8306' ]
+TranslatorBot connected to 45.141.57.22:8306
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : Ку всем
+45.141.57.22:8306 TranslatorBot 4 1 'рабдонк' : na lirike: тут
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : рабдонк: na lirike: тут
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : брух
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: bruh
+45.141.57.22:8306 TranslatorBot 13 1 'тупая' : .kz
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : тупая: .kz
+45.141.57.22:8306 TranslatorBot 13 0 'тупая' : бля
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : о уже дамми подключило
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: The ladies are already on.
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : ну мощ
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: You prove yourself to be an Anskill.
+45.141.57.22:8306 TranslatorBot 4 1 'рабдонк' : na lirike: короче, свинья, дам тебе шанс, играем до 1 фулл фриз на лив 10 часов
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : рабдонк: Na lirike: short, pig, I'll give you a chance, play up to 1 full frieze for 10 
+45.141.57.22:8306 TranslatorBot 7 0 'na lirike' : пошли
+health check: { status: 'ok' }
+45.141.57.22:8306 TranslatorBot 2 0 'TranslatorBot' : na lirike: go
+Shutting down all bots...
+TranslatorBot disconnected from 45.141.57.22:8306: null
+
+Завершение работы — убиваем переводчик...
+PS D:\proektiki\всякое\aiddbot> ^C

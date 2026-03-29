@@ -1,63 +1,59 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ensureServer = ensureServer;
-exports.translateText = translateText;
-exports.stopServer = stopServer;
-exports.gracefulShutdown = gracefulShutdown;
-const child_process_1 = require("child_process");
-const path_1 = __importDefault(require("path"));
-const promises_1 = __importDefault(require("fs/promises"));
-const PID_FILE = '.server.pid';
+import { spawn } from 'child_process';
+import path from 'path';
+import fs from 'fs/promises';
+
+const PID_FILE  = '.server.pid';
 const READY_FILE = '.server.ready';
 const PORT = 5000;
-let serverPid = null;
+
+let serverPid: number | null = null;
 let isShuttingDown = false;
-let startingPromise = null; // мьютекс запуска
+let startingPromise: Promise<void> | null = null; // мьютекс запуска
+
 // ─── утилиты ────────────────────────────────────────────────────────────────
-function delay(ms) {
+
+function delay(ms: number): Promise<void> {
     return new Promise(r => setTimeout(r, ms));
 }
-async function readPidFromFile(file) {
+
+async function readPidFromFile(file: string): Promise<number | null> {
     try {
-        const data = await promises_1.default.readFile(file, 'utf-8');
+        const data = await fs.readFile(file, 'utf-8');
         const pid = parseInt(data.trim(), 10);
-        if (pid > 0)
-            return pid;
-    }
-    catch { }
+        if (pid > 0) return pid;
+    } catch {}
     return null;
 }
-function isProcessAlive(pid) {
+
+function isProcessAlive(pid: number): boolean {
     try {
         process.kill(pid, 0);
         return true;
-    }
-    catch {
+    } catch {
         return false;
     }
 }
-async function isServerHealthy() {
+
+async function isServerHealthy(): Promise<boolean> {
     try {
         const res = await fetch(`http://127.0.0.1:${PORT}/health`, { signal: AbortSignal.timeout(1000) });
-        if (!res.ok)
-            return false;
-        const data = await res.json();
+        if (!res.ok) return false;
+        const data = await res.json() as { status?: string };
         console.log('health check:', data);
         return data.status === 'ok';
-    }
-    catch (e) {
+    } catch (e) {
         console.log('health check failed:', e);
         return false;
     }
 }
+
 // ─── управление сервером ─────────────────────────────────────────────────────
-async function startPythonServer() {
-    await promises_1.default.unlink(PID_FILE).catch(() => { });
-    await promises_1.default.unlink(READY_FILE).catch(() => { });
-    const proc = (0, child_process_1.spawn)('python', [path_1.default.join(__dirname, 'server.py')], {
+
+async function startPythonServer(): Promise<void> {
+    await fs.unlink(PID_FILE).catch(() => {});
+    await fs.unlink(READY_FILE).catch(() => {});
+
+    const proc = spawn('python', [path.join(__dirname, 'server.py')], {
         detached: true,
         stdio: 'pipe', // было 'ignore'
         windowsHide: true,
@@ -66,7 +62,9 @@ async function startPythonServer() {
     proc.stderr?.on('data', (d) => console.log('[python err]', d.toString().trim()));
     proc.on('error', (e) => console.log('[python spawn error]', e.message));
     proc.unref();
+
     console.log('Python сервер запущен, ждём полной готовности...');
+
     const deadline = Date.now() + 180_000; // 3 минуты
     while (Date.now() < deadline) {
         if (await isServerHealthy()) {
@@ -79,64 +77,80 @@ async function startPythonServer() {
     }
     throw new Error('Сервер не запустился за 3 минуты');
 }
-async function tryReuseExistingServer() {
-    if (!await isServerHealthy())
-        return false;
+
+async function tryReuseExistingServer(): Promise<boolean> {
+    if (!await isServerHealthy()) return false;
     serverPid = await readPidFromFile(READY_FILE) ?? await readPidFromFile(PID_FILE);
     console.log(`Живой сервер найден → переиспользуем${serverPid ? ` (PID: ${serverPid})` : ''}`);
     return true;
 }
-async function ensureServer() {
-    if (await isServerHealthy())
-        return; // уже живой — ничего не делаем
+
+export async function ensureServer(): Promise<void> {
+    if (await isServerHealthy()) return; // уже живой — ничего не делаем
     // мьютекс — если запуск уже идёт, просто ждём его
-    if (startingPromise)
-        return startingPromise;
+    if (startingPromise) return startingPromise;
     startingPromise = startPythonServer().finally(() => { startingPromise = null; });
     return startingPromise;
 }
-async function translateText(text, sourceLang = 'ru', targetLang = 'en') {
+
+// ─── перевод ─────────────────────────────────────────────────────────────────
+
+interface TranslateResponse {
+    translatedText?: string;
+    error?: string;
+}
+
+export async function translateText(
+    text: string,
+    sourceLang: string = 'ru',
+    targetLang: string = 'en',
+): Promise<string> {
     const trimmed = String(text).trim();
-    if (!trimmed)
-        return text;
+    if (!trimmed) return text;
+
     await ensureServer();
+
     const res = await fetch(`http://127.0.0.1:${PORT}/translate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: trimmed, source: sourceLang, target: targetLang }),
     });
+
     if (!res.ok) {
         const err = await res.text().catch(() => '');
         throw new Error(`HTTP ${res.status}: ${res.statusText} — ${err}`);
     }
-    const data = await res.json();
-    if (data.error)
-        throw new Error(data.error);
+
+    const data = await res.json() as TranslateResponse;
+    if (data.error) throw new Error(data.error);
     return data.translatedText ?? '';
 }
+
 // ─── завершение ───────────────────────────────────────────────────────────────
-function stopServer() {
+
+export function stopServer(): void {
     if (serverPid) {
         try {
             process.kill(serverPid, 'SIGKILL');
             console.log(`Сервер убит (PID: ${serverPid})`);
-        }
-        catch {
+        } catch {
             console.log('Сервер уже мёртв');
         }
         serverPid = null;
     }
-    promises_1.default.unlink(PID_FILE).catch(() => { });
-    promises_1.default.unlink(READY_FILE).catch(() => { });
+    fs.unlink(PID_FILE).catch(() => {});
+    fs.unlink(READY_FILE).catch(() => {});
 }
-async function gracefulShutdown() {
-    if (isShuttingDown)
-        return;
+
+export async function gracefulShutdown(): Promise<void> {
+    if (isShuttingDown) return;
     isShuttingDown = true;
     console.log('\nЗавершение работы — убиваем переводчик...');
     stopServer();
 }
+
 // ─── запуск напрямую ──────────────────────────────────────────────────────────
+
 // ts-node translate.ts
 const isMain = require.main === module;
 if (isMain) {
@@ -145,15 +159,12 @@ if (isMain) {
             await ensureServer();
             console.log('RU → EN:', await translateText('Привет, как дела?'));
             console.log('EN → RU:', await translateText('Hello world!', 'en', 'ru'));
-        }
-        catch (err) {
-            console.error('Ошибка:', err.message);
-        }
-        finally {
+        } catch (err) {
+            console.error('Ошибка:', (err as Error).message);
+        } finally {
             await gracefulShutdown();
         }
     })();
-}
-else {
+} else {
     ensureServer(); // прогреваем при импорте
 }
