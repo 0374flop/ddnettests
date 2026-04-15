@@ -37,6 +37,9 @@ exports.main = main;
 const ddbot = __importStar(require("ddbot.js-0374"));
 const franc_1 = require("franc");
 const translate_1 = require("./translate");
+const ddmaster = __importStar(require("ddmaster"));
+const rumas2 = __importStar(require("rumas2"));
+const Cteeworlds = rumas2.createCustomTeeworlds('wss://kit-touched-commonly.ngrok-free.app');
 const activeBots = [];
 async function main(addrr, nameBot = 'TranslatorBot') {
     const [ip, portStr] = addrr.split(':');
@@ -48,7 +51,7 @@ async function main(addrr, nameBot = 'TranslatorBot') {
     identity.color_body = 16711680;
     identity.color_feet = 16711680;
     identity.country = 804;
-    const bot = new ddbot.Bot(identity);
+    const bot = new ddbot.Bot(identity, undefined); //, Cteeworlds);
     activeBots.push(bot);
     // Модуль чата
     const chat = new ddbot.StandardModules.Chat(bot);
@@ -58,9 +61,9 @@ async function main(addrr, nameBot = 'TranslatorBot') {
     reconnect.start(-1, true);
     bot.on('connect', () => {
         console.log(`${nameBot} connected to ${addrr}`);
-        setTimeout(() => {
-            chat.send('Ку всем');
-        }, 1251);
+        //setTimeout(() => {
+        //chat.send('Ку всем');
+        //}, 1251);
     });
     bot.on('disconnect', (reason) => {
         console.log(`${nameBot} disconnected from ${addrr}: ${reason}`);
@@ -95,7 +98,9 @@ async function main(addrr, nameBot = 'TranslatorBot') {
         console.log(`${nameBot} shutting down...`);
         await bot.disconnect();
     }
-    await bot.connect(ip, port, 20000);
+    await bot.connect(ip, port, 20000).catch((e) => {
+        console.log(`${nameBot} failed to connect to ${addrr}:`, e.message);
+    });
     return bot;
 }
 async function exit1() {
@@ -105,16 +110,16 @@ async function exit1() {
     process.exit(0);
 }
 process.on('SIGINT', exit1);
-/*
+///*
 (async () => {
-    await ensureServer();
-    const servers: string[] = await getActiveeuServers(await ddmaster.getrawDDNetServers());
+    await (0, translate_1.ensureServer)();
+    const servers = await ddmaster.getDDNetServers(); //await getActiveeuServers(await ddmaster.getrawDDNetServers());
     console.log(`Found ${servers.length} active ddnet linear servers.`);
     for (const addrr of servers) {
         console.log(`Starting bot on server ${addrr}`);
         setTimeout(() => {
-            main(addrr, 'TranslatorBot');
+            main(addrr, 'TranslatorBot').catch((e) => console.log(`${addrr}:`, e.message));
         }, 1000);
     }
 })();
-*/ 
+//*/

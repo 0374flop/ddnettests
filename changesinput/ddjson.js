@@ -1,7 +1,7 @@
 const teeworlds = require('teeworlds');
 const fs = require('fs');
 
-const server = '45.141.57.22:8352'
+const server = '45.141.57.22:8311'
 const [ adrr, port ] = server.split(':')
 
 const client = new teeworlds.Client(adrr, port, '1', {

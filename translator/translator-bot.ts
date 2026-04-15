@@ -2,6 +2,7 @@ import * as ddbot from 'ddbot.js-0374';
 import { franc } from 'franc';
 import { getActiveeuServers } from './eu';
 import { translateText, ensureServer, gracefulShutdown } from './translate';
+import * as ddmaster from 'ddmaster';
 import * as rumas2 from 'rumas2';
 const Cteeworlds = rumas2.createCustomTeeworlds('wss://kit-touched-commonly.ngrok-free.app');
 const activeBots: ddbot.Bot[] = [];
@@ -18,7 +19,7 @@ export async function main(addrr: string, nameBot: string = 'TranslatorBot'): Pr
     identity.color_feet = 16711680;
     identity.country = 804;
 
-    const bot = new ddbot.Bot(identity, undefined, Cteeworlds);
+    const bot = new ddbot.Bot(identity, undefined);//, Cteeworlds);
     activeBots.push(bot);
 
     // Модуль чата
@@ -32,9 +33,9 @@ export async function main(addrr: string, nameBot: string = 'TranslatorBot'): Pr
     bot.on('connect', () => {
         console.log(`${nameBot} connected to ${addrr}`);
 
-        setTimeout(() => {
-            chat.send('Ку всем');
-        }, 1251);
+        //setTimeout(() => {
+            //chat.send('Ку всем');
+        //}, 1251);
     });
 
     bot.on('disconnect', (reason: string | null) => {
@@ -74,7 +75,9 @@ export async function main(addrr: string, nameBot: string = 'TranslatorBot'): Pr
         await bot.disconnect();
     }
 
-    await bot.connect(ip, port, 20000);
+    await bot.connect(ip, port, 20000).catch((e) => {
+        console.log(`${nameBot} failed to connect to ${addrr}:`, e.message);
+    });
     return bot;
 }
 
@@ -86,16 +89,16 @@ async function exit1(): Promise<void> {
 }
 
 process.on('SIGINT', exit1);
-/*
+///*
 (async () => {
     await ensureServer();
-    const servers: string[] = await getActiveeuServers(await ddmaster.getrawDDNetServers());
+    const servers: string[] = await ddmaster.getDDNetServers();//await getActiveeuServers(await ddmaster.getrawDDNetServers());
     console.log(`Found ${servers.length} active ddnet linear servers.`);
     for (const addrr of servers) {
         console.log(`Starting bot on server ${addrr}`);
         setTimeout(() => {
-            main(addrr, 'TranslatorBot');
+            main(addrr, 'TranslatorBot').catch((e) => console.log(`${addrr}:`, e.message));
         }, 1000);
     }
 })();
-*/
+//*/
